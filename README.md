@@ -73,22 +73,3 @@ npm run preview
 # Deploy to GitHub Pages
 npm run deploy
 ```
-
----
-
-## 📁 Project Structure
-
-```
-zenpos-system/
-├── src/
-│   ├── App.jsx              # Main application component
-│   ├── main.jsx             # React entry point
-│   └── pos_item.json        # Product data (50 items)
-├── public/                  # Static assets
-├── screenshots/             # Application screenshots
-├── index.html              # HTML template
-├── package.json            # Dependencies and scripts
-├── vite.config.js          # Vite configuration
-├── .gitignore             # Git ignore rules
-└── README.md              # This file
-```
