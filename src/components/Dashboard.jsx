@@ -3,6 +3,12 @@ import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, Cart
 import { COLORS } from '../constants';
 
 export default function Dashboard({ stats, periodFilter, setPeriodFilter }) {
+  // Simple helper to format title based on filter
+  const getFilterLabel = () => {
+    const labels = { daily: 'Daily', weekly: 'Weekly', monthly: 'Monthly', yearly: 'Yearly' };
+    return labels[periodFilter] || 'All Time';
+  };
+
   return (
     <div className="dashboard">
       <div className="stats-grid">
@@ -11,51 +17,38 @@ export default function Dashboard({ stats, periodFilter, setPeriodFilter }) {
           <div className="stat-value">฿{stats.totalSales.toLocaleString()}</div>
         </div>
         <div className="stat-card">
-          <div className="stat-label">Period Sales</div>
+          <div className="stat-label">{getFilterLabel()} Sales</div>
           <div className="stat-value">฿{stats.periodSales.toLocaleString()}</div>
         </div>
         <div className="stat-card">
-          <div className="stat-label">Total Transactions</div>
+          <div className="stat-label">Transactions ({getFilterLabel()})</div>
           <div className="stat-value">{stats.transactionCount}</div>
         </div>
       </div>
 
       <div className="period-filter">
-        <button
-          className={`filter-btn ${periodFilter === 'daily' ? 'active' : ''}`}
-          onClick={() => setPeriodFilter('daily')}
-        >
-          📅 Daily
-        </button>
-        <button
-          className={`filter-btn ${periodFilter === 'weekly' ? 'active' : ''}`}
-          onClick={() => setPeriodFilter('weekly')}
-        >
-          📆 Weekly
-        </button>
-        <button
-          className={`filter-btn ${periodFilter === 'monthly' ? 'active' : ''}`}
-          onClick={() => setPeriodFilter('monthly')}
-        >
-          📊 Monthly
-        </button>
+        {['daily', 'weekly', 'monthly', 'yearly'].map((p) => (
+          <button
+            key={p}
+            className={`filter-btn ${periodFilter === p ? 'active' : ''}`}
+            onClick={() => setPeriodFilter(p)}
+          >
+            {p === 'daily' && '📅 Daily'}
+            {p === 'weekly' && '📆 Weekly'}
+            {p === 'monthly' && '📊 Monthly'}
+            {p === 'yearly' && '🗓️ Yearly'}
+          </button>
+        ))}
       </div>
 
       <div className="charts-grid">
         <div className="chart-card">
-          <div className="chart-title">📈 Sales Trend (Last 30 Days)</div>
+          <div className="chart-title">📈 Sales Trend - {getFilterLabel()}</div>
           <ResponsiveContainer width="100%" height={320}>
             <LineChart data={stats.lineChartData}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-              <XAxis
-                dataKey="date"
-                stroke="#64748b"
-                style={{ fontSize: '0.85rem' }}
-              />
-              <YAxis
-                stroke="#64748b"
-                style={{ fontSize: '0.85rem' }}
-              />
+              <XAxis dataKey="date" stroke="#64748b" style={{ fontSize: '0.85rem' }} />
+              <YAxis stroke="#64748b" style={{ fontSize: '0.85rem' }} />
               <Tooltip
                 contentStyle={{
                   background: 'rgba(255, 255, 255, 0.95)',
@@ -79,7 +72,7 @@ export default function Dashboard({ stats, periodFilter, setPeriodFilter }) {
         </div>
 
         <div className="chart-card">
-          <div className="chart-title">📊 Sales by Category</div>
+          <div className="chart-title">📊 Sales by Category ({getFilterLabel()})</div>
           <ResponsiveContainer width="100%" height={320}>
             <BarChart data={stats.barChartData}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
@@ -91,10 +84,7 @@ export default function Dashboard({ stats, periodFilter, setPeriodFilter }) {
                 textAnchor="end"
                 height={80}
               />
-              <YAxis
-                stroke="#64748b"
-                style={{ fontSize: '0.85rem' }}
-              />
+              <YAxis stroke="#64748b" style={{ fontSize: '0.85rem' }} />
               <Tooltip
                 contentStyle={{
                   background: 'rgba(255, 255, 255, 0.95)',
@@ -104,12 +94,7 @@ export default function Dashboard({ stats, periodFilter, setPeriodFilter }) {
                 }}
               />
               <Legend />
-              <Bar
-                dataKey="sales"
-                fill="#667eea"
-                name="Sales (฿)"
-                radius={[8, 8, 0, 0]}
-              />
+              <Bar dataKey="sales" fill="#667eea" name="Sales (฿)" radius={[8, 8, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -117,7 +102,7 @@ export default function Dashboard({ stats, periodFilter, setPeriodFilter }) {
 
       <div className="charts-grid">
         <div className="chart-card">
-          <div className="chart-title">🥧 Category Distribution</div>
+          <div className="chart-title">🥧 Category Distribution ({getFilterLabel()})</div>
           <ResponsiveContainer width="100%" height={320}>
             <PieChart>
               <Pie
@@ -147,7 +132,7 @@ export default function Dashboard({ stats, periodFilter, setPeriodFilter }) {
         </div>
 
         <div className="top-products">
-          <div className="chart-title">🏆 Top 5 Best-Selling Items</div>
+          <div className="chart-title">🏆 Top 5 - {getFilterLabel()}</div>
           {stats.topProducts.length > 0 ? (
             stats.topProducts.map((product, index) => (
               <div key={index} className="product-item">
@@ -160,7 +145,7 @@ export default function Dashboard({ stats, periodFilter, setPeriodFilter }) {
           ) : (
             <div className="empty-state">
               <div className="empty-icon">📊</div>
-              <div className="empty-text">No sales data available</div>
+              <div className="empty-text">No data for this period</div>
             </div>
           )}
         </div>

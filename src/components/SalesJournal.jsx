@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { CATEGORY_DISPLAY } from '../constants';
 
-export default function SalesJournal({ transactions, setTransactions, products }) {
+export default function SalesJournal({ transactions, setTransactions, products, onDelete }) {
   const [formData, setFormData] = useState({
     productId: '',
     quantity: 1,
@@ -121,6 +121,7 @@ export default function SalesJournal({ transactions, setTransactions, products }
                 <th>Quantity</th>
                 <th>Unit Price</th>
                 <th>Total</th>
+                <th>Action</th> {/* Added Header */}
               </tr>
             </thead>
             <tbody>
@@ -141,6 +142,28 @@ export default function SalesJournal({ transactions, setTransactions, products }
                     fontFamily: 'JetBrains Mono, monospace'
                   }}>
                     ฿{transaction.total.toLocaleString()}
+                  </td>
+                  <td>
+                    {/* NEW DELETE BUTTON */}
+                    <button 
+                      onClick={() => onDelete(transaction.id)}
+                      className="delete-btn"
+                      style={{
+                        background: '#fee2e2',
+                        color: '#ef4444',
+                        border: 'none',
+                        padding: '6px 12px',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        fontSize: '0.85rem',
+                        fontWeight: '600',
+                        transition: 'all 0.2s'
+                      }}
+                      onMouseOver={(e) => e.target.style.background = '#fecaca'}
+                      onMouseOut={(e) => e.target.style.background = '#fee2e2'}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}
