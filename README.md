@@ -1,6 +1,5 @@
 # ProjectPOS - Point of Sale System 🏪
-
-A modern, feature-rich Point of Sale (POS) web application built with React, featuring real-time analytics, interactive visualizations, and comprehensive sales management capabilities.
+https://u6610996.github.io/ProjectPOS-system/
 
 ## 👥 Team Members
 
