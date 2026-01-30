@@ -4,8 +4,16 @@ A modern, feature-rich Point of Sale (POS) web application built with React, fea
 
 ## 👥 Team Members
 
-- 6610909 RATCHANON PUWAPATTARAPOKIN
-- 6610996 WORACHAI ARANCHOT
+- RATCHANON PUWAPATTARAPOKIN
+- WORACHAI ARANCHOT
+
+---
+
+## 📸 Screenshot
+
+![Screenshot 1](image1.png)
+
+![Screenshot 2](image2.png)
 
 ---
 
